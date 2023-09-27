@@ -28,5 +28,5 @@ Alongside user prompts, the app also enables the management of system prompts, e
 Users can save their progress and download the organized prompts in YAML format, facilitating easy sharing and storage.
 
 <p align="center">
-  <img src="assets/capture_1.jpeg" width="300" height="300" alt="Prompt Manager">
+  <img src="assets/capture_1.jpeg" width="500" height="600" alt="Prompt Manager">
 </p>
