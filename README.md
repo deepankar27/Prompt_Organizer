@@ -90,11 +90,13 @@ params = get_parameters('Intent',1)
 
 Inside the prompt use placeholders and replace them with right contents:
 
-I am giving you a passage and you have to find the most important intents which are having high discussion value. All the intents must be in string format and relevancy score must be in floats format.\n\nYour response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}].\nDo not add any explanations.\n\nPassage:\n\n **##placeholder_1##**
+Example Prompt:
+> I am giving you a passage and you have to find the most important intents which are having high discussion value. All the intents must be in string format and relevancy score must be in floats format.\n\nYour response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}].\nDo not add any explanations.\n\nPassage:\n\n **##placeholder_1##**
 
 Replace the **##placeholder_1##** dynamically with the input passage.
 
 ```
+Passage = get_prompt('Intent',1)
 Passage.replace("##placeholder_1##", passage_content)
 ```
 
