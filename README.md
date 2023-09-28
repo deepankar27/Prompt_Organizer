@@ -11,19 +11,22 @@ Users can organize prompts under different tasks (Summarization, Topic Discovery
 2. Prompt Versions Management:
 Within each task, users can create and manage multiple versions of prompts, each with its unique set of parameters.
 
-3. Prompt Parameters Configuration:
+3. Difference Visualization:
+Users can leverage the integrated 'Show Diff' feature to effortlessly visualize and compare differences, additions, or deletions between various prompt versions, highlighted for easy spotting.
+
+4. Prompt Parameters Configuration:
 Users can easily configure various parameters like temperature, top_p, max tokens, and threshold for each version of the prompt.
 
-4. Status Tracking:
+5. Status Tracking:
 The app allows users to set and track the status of each prompt, aiding in prompt evaluation and optimization.
 
-5. Commenting Feature:
+6. Commenting Feature:
 Each prompt version has an associated comment box, allowing users to annotate important notes or information related to the prompt.
 
-6. System Prompt Management:
+7. System Prompt Management:
 Alongside user prompts, the app also enables the management of system prompts, each with its commenting feature.
 
-7. Save and Download:
+8. Save and Download:
 Users can save their progress and download the organized prompts in YAML format, facilitating easy sharing and storage.
 
 <p align="center">
