@@ -1,8 +1,9 @@
-# Managing Prompts with Ease: Prompt Organizer Pro
+
+# Managing Prompts with Ease: Prompt Organizer
 
 In the realm of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
-The lack of a structured approach to manage prompts efficiently often makes it difficult to navigate through them, causing a significant impediment in the workflow. Understanding this persistent issue, we introduce an application that serves as a beacon of relief: The **Prompt Organizer Pro**.
+The lack of a structured approach to manage prompts efficiently often makes it difficult to navigate through them, causing a significant impediment in the workflow. Understanding this persistent issue, we introduce an application that serves as a beacon of relief: The **Prompt Organizer**.
 
 ## Features of the Prompt Organizer Pro:
 1. Task-Based Organization:
@@ -36,18 +37,9 @@ This application seamlessly facilitates developers by allowing the direct incorp
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
-## Example how to use it
+## How to use the YAML file:
 
-### Inside the prompt use placeholders and replace them with right contents:
-I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the entire call conversation. All the intents must be in string format and relevancy score must be in integer format.\n\nYour response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}].\nDo not add any explanations.\n\nPassage:\n\n##placeholder_1##
-
-Replace the ##placeholder_1## dynamically with the input passage.
-
-```
-Passage.replace("##placeholder_1##", passage_content)
-```
-
-## How to read prompt from yaml:
+### How to read prompt from yaml:
 Load the yaml file using this method:
 ```
 import yaml
@@ -66,7 +58,7 @@ def read_template():
 
 ```
 
-## How to read prompts for a given task with its version from the YAML file?
+### How to read prompts for a given task with its version from the YAML file?
 ```
 def get_prompt(task, version):
     yaml_content = read_template()
@@ -77,7 +69,7 @@ prompt = get_prompt("Intent",1)
 
 ```
 
-## How to get parameters of given task with its version from the YAML file?
+### How to get parameters of given task with its version from the YAML file?
 ```
 def get_parameters(task, version):
 
@@ -93,3 +85,17 @@ def get_parameters(task, version):
 params = get_parameters('Intent',1)
 
 ```
+
+### How to handle dynamic input value in prompt?
+
+Inside the prompt use placeholders and replace them with right contents:
+
+I am giving you a passage and you have to find the most important intents which are having high discussion value. All the intents must be in string format and relevancy score must be in floats format.\n\nYour response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}].\nDo not add any explanations.\n\nPassage:\n\n **##placeholder_1##**
+
+Replace the **##placeholder_1##** dynamically with the input passage.
+
+```
+Passage.replace("##placeholder_1##", passage_content)
+```
+
+Use the helper.py file to use all these methods.
