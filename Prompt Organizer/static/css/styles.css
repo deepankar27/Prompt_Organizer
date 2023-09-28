@@ -1,0 +1,103 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f8fc;
+}
+
+#app {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+button {
+    cursor: pointer;
+    background-color: #2563EB;
+    border: none;
+    color: #ffffff;
+    transition: background-color 0.2s;
+}
+
+button:hover {
+    background-color: #3B82F6;
+}
+
+.task {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #e3e8ee;
+    border-radius: 5px;
+    background-color: #f1f5f9;
+}
+
+.prompts, 
+.system-prompts {
+    margin-top: 20px;
+}
+
+h3, h4 {
+    border-bottom: 1px solid #d1d5db;
+    padding-bottom: 10px;
+}
+
+.prompt, 
+.system-prompt {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px dashed #d1d5db;
+    border-radius: 5px;
+    background-color: #e5e7eb;
+}
+
+pre {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background-color: #e5e7eb;
+}
+
+textarea {
+    width: 100%;
+    padding: 8px 12px;
+    margin: 5px 0;
+    resize: vertical;  /* Allows vertical resizing only */
+}
+
+.prompt input[name="comment"] {
+    grid-column: 2 / 7; /* Adjust this according to Bootstrap grid if necessary */
+}
+
+.button-group {
+    display: flex;
+}
+
+.comment-container {
+    margin-top: 20px !important; /* or whatever value you prefer */
+}
+
+
+header {
+    background-color: #2563EB;
+    color: #ffffff;
+    text-align: center;
+    padding: 1em 0;
+    box-shadow: 0px 4px 2px -2px gray;
+}
+
+label {
+    display: block;
+    font-weight: normal;
+    margin-bottom: 5px;
+    color: #2f3031; /* or any color you prefer */
+}
+
+
+.diff-inserted {
+    background-color: #e6ffe6; /* light green */
+    color: #008000; /* green */
+}
+.diff-deleted {
+    background-color: #ffe6e6; /* light red */
+    color: #800000; /* red */
+}

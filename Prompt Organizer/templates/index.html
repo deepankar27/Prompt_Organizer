@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuration Manager</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Optional Bootstrap JS and dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"></link>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
+    
+    <script src="{{ url_for('static', filename='js/diff.min.js') }}"></script>
+
+</head>
+
+<body>
+    <header>
+        <h1>Prompt Organizer Pro</h1>
+    </header>
+
+    <div class="container mt-4" id="app">
+        <!-- Task UI -->
+        <div id="tasks">
+            <!-- Sample Task -->
+            <div class="task card p-4 mb-4">
+                <input type="text" class="task-name form-control mb-4" value="Task_1" />
+
+                <!-- Prompts UI -->
+                <div class="prompts">
+                    <h4 class="mb-4">Prompts</h4>
+                    <!-- Sample Prompt -->
+                    <div class="prompt version_1">
+                        <label>Version_1:</label>
+                        <label for="prompt">Prompt:</label>
+                        <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+                        <div class="form-row">
+                            <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
+                            <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="top_p" /></div>
+                            <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Max Tokens" /></div>
+                            <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Threshold" /></div>
+                            <div class="col">
+                                <label for="status">Status:</label>
+                                <select name="status" class="form-control">
+                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="evaluating">Evaluating</option>
+                                    <option value="best_prompt">Best Prompt</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="comment-container">
+                            <label for="comment">Comment:</label>
+                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                
+                <div class="button-group">
+                    <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
+                    <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
+                    <!-- Add this where you have your "Delete Prompt Version" Button -->
+                    <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
+
+                </div>                
+                <!-- System Prompts UI -->
+                <div class="system-prompts mt-4">
+                    <h4 class="mb-4">System Prompts</h4>
+                    <!-- Sample System Prompt -->
+                    <div class="system-prompt version_1">
+                        <label>System Prompt version_1:</label>
+                        <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+                        
+                        <div class="comment-container">
+                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                        </div>
+
+                    </div>
+                    
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
+                    <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="button-container">
+            <button onclick="addTask()" class="btn btn-success">Add Task</button>
+        
+            <button onclick="deleteTask()" class="btn btn-danger">Delete Task</button>
+
+            <button onclick="saveData()" class="btn btn-primary">Save</button>
+            <a href="{{ url_for('static', filename='data.yaml') }}" download="data.yaml" class="btn btn-secondary">Download</a>
+
+            <!-- <input type="file" id="uploadYAML" /> -->
+        </div>
+        <!-- Output -->
+        <pre id="output" class="mt-4 border p-3"></pre>
+    </div>
+
+    <script>
+        let taskCount = 1;
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+            fetch("{{ url_for('static', filename='data.yaml') }}")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    return response.text();
+                })
+                .then(yamlText => {
+                    try {
+                        const jsonData = jsyaml.load(yamlText); // using jsyaml to parse the yaml text
+                        console.log(jsonData); // you can check your console to see if jsonData is logged properly
+                        createComponents(jsonData); // if jsonData is correctly parsed, then proceed with creating components.
+                    } catch (e) {
+                        console.error("Error parsing YAML", e);
+                        loadBlankPlaceholders();
+                    }
+                })
+                .catch(err => {
+                    console.error('Fetch Error:', err);
+                });
+
+
+        });
+
+
+        function loadBlankPlaceholders() {
+            // Here you can implement how to load your app with blank placeholders.
+            // For example, you can append a task with blank inputs.
+            addTask();
+        }
+
+
+        function addTask() {
+            // Add a new task
+            // For brevity, we'll add a pre-defined task structure
+            // You can expand this to dynamically add different versions, prompts, etc.
+            const taskTemplate = `
+            <div id="tasks">
+            <!-- Sample Task -->
+            <div class="task card p-4 mb-4">
+                <input type="text" class="task-name form-control mb-4" value="Task_1" />
+
+                <!-- Prompts UI -->
+                <div class="prompts">
+                    <h4 class="mb-4">Prompts</h4>
+                    <!-- Sample Prompt -->
+                    <div class="prompt version_1">
+                        <label>Version_1:</label>
+                        <label for="prompt">Prompt:</label>
+                        <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Add Prompt" rows="5"></textarea>
+                        <div class="form-row">
+                            <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
+                            <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="Set top_p" /></div>
+                            <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Set Max Tokens" /></div>
+                            <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
+                            <div class="col">
+                                <label for="status">Status:</label>
+                                <select name="status" class="form-control">
+                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="evaluating">Evaluating</option>
+                                    <option value="best_prompt">Best Prompt</option>
+                                    
+                                </select>
+                            </div>
+                            
+                        </div>
+                        <div class="comment-container">
+                            <label for="comment">Comment:</label>
+                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                        </div>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
+                    <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
+                    <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
+                </div>
+
+                <!-- System Prompts UI -->
+                <div class="system-prompts mt-4">
+                    <h4 class="mb-4">System Prompts</h4>
+                    <!-- Sample System Prompt -->
+                    <div class="system-prompt version_1">
+                        <label>Version_1:</label>
+                        <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+
+                        <div class="comment-container">
+                            <label for="comment">Comment:</label>
+                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
+                    <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
+                </div>
+            </div>
+        </div>
+            `;
+            //document.getElementById("tasks").innerHTML += taskTemplate;
+
+
+
+            var stringToHTML = function (str) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(str, 'text/html');
+                return doc.body;
+            }; 
+
+            document.getElementById("tasks").append(stringToHTML(taskTemplate));
+
+        }
+
+        function deleteTask() {
+            const tasks = document.querySelectorAll('.task');
+            if (tasks.length === 0) return alert('No tasks available to delete!');
+
+            const isConfirmed = confirm('Are you sure you want to delete the last task?');
+            if (isConfirmed) {
+                tasks[tasks.length - 1].remove();
+            }
+        }
+
+
+        function saveData() {
+    // Convert UI data to YAML format
+    let output = "";
+    const tasks = document.querySelectorAll('.task');
+    
+    tasks.forEach(task => {
+        const taskName = task.querySelector('.task-name').value;
+        output += taskName + ":\n";
+        
+        // Handle prompts
+        const prompts = task.querySelectorAll('.prompt');
+        if (prompts.length) {
+            output += "  prompts:\n";
+            prompts.forEach(prompt => {
+                const verName = prompt.className.split(' ')[1];
+                output += `    ${verName}:\n`;
+                const inputs = prompt.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    output += `      ${input.name}: "${input.value}"\n`;
+                });
+            });
+        }
+        
+        // Handle system prompts
+        const systemPrompts = task.querySelectorAll('.system-prompt');
+        if (systemPrompts.length) {
+            output += "  system_prompts:\n";
+            systemPrompts.forEach(systemPrompt => {
+                const verName = systemPrompt.className.split(' ')[1];
+                output += `    ${verName}:\n`;
+                const inputs = systemPrompt.querySelectorAll('input, textarea');
+                inputs.forEach(input => {
+                    output += `      ${input.name}: "${input.value}"\n`;
+                });
+            });
+        }
+    });
+    
+    document.getElementById("output").innerText = output;
+
+
+    // After preparing the output string, send it to the server.
+    fetch('/save_yaml', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content: output })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('File saved:', data);
+    })
+    .catch(error => {
+        console.error('Error during saving file:', error);
+    });
+
+}
+
+        function addPromptVersion(taskElement) {
+
+            console.log(taskElement);
+          
+            const promptsDiv = taskElement.querySelector('.prompts');
+            const newVersionNumber = promptsDiv.querySelectorAll('.prompt').length + 1;
+            
+            
+
+            const promptTemplate = `
+                <div class="prompt version_${newVersionNumber}">
+                    Version_${newVersionNumber}:
+                    <textarea name="prompt" class="form-control mb-3" placeholder="Add Prompt" rows="5"></textarea>
+                    <div class="form-row">
+                        <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
+                            <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="Set top_p" /></div>
+                            <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Set Max Tokens" /></div>
+                            <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
+                            <div class="col">
+                                <label for="status">Status:</label>
+                                <select name="status" class="form-control">
+                                    <option value="" selected disabled>Select Status</option>
+                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="evaluating">Evaluating</option>
+                                    <option value="best_prompt">Best Prompt</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="comment-container">
+                            <label for="comment">Comment:</label>
+                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                        </div>
+                </div>
+            `;
+
+            var stringToHTML = function (str) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(str, 'text/html');
+                return doc.body;
+            };    
+            //const val1 = document.getElementsByName("prompt");
+            //console.log(val1[0].value);
+            //promptsDiv.innerHTML += promptTemplate;
+            promptsDiv.append(stringToHTML(promptTemplate));
+            
+            // Enable "Show Diff" button if more than one prompt version
+            // Enable "Show Diff" button if more than one prompt version
+            if(promptsDiv.querySelectorAll('.prompt').length > 1) {
+                console.log("Need to Enable Show Diff Button")
+                const showDiffButton = taskElement.querySelector('.toggle-diff-btn'); // Updated selector here
+                if(showDiffButton) {
+                    showDiffButton.removeAttribute('disabled');
+                } else {
+                    console.error('Show Diff Button not found!');
+                }
+            }
+
+            
+        }
+
+        
+
+        function addSystemPromptVersion(taskElement) {
+            const systemPromptsDiv = taskElement.querySelector('.system-prompts');
+            const newVersionNumber = systemPromptsDiv.querySelectorAll('.system-prompt').length + 1;
+            const systemPromptTemplate = `
+                <div class="system-prompt version_${newVersionNumber}">
+                    Version_${newVersionNumber}:
+                    <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+
+                    <div class="comment-container">
+                        <label for="comment">Comment:</label>
+                        <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                    </div>
+                </div>
+            `;
+
+            var stringToHTML = function (str) {
+                var parser = new DOMParser();
+                var doc = parser.parseFromString(str, 'text/html');
+                return doc.body;
+            }; 
+
+            systemPromptsDiv.append(stringToHTML(systemPromptTemplate));
+        }
+
+
+
+
+        function deletePromptVersion(taskElement) {
+
+            const promptsDiv = taskElement.querySelector('.prompts');
+            const allPrompts = promptsDiv.querySelectorAll('.prompt');
+            
+            if (allPrompts.length) {
+                const lastPrompt = allPrompts[allPrompts.length - 1];
+                lastPrompt.remove();
+            } else {
+                console.warn("No prompts to delete");
+            }
+
+            // Disable "Show Diff" button if one or no prompt version remains
+            if(promptsDiv.querySelectorAll('.prompt').length <= 1) {
+                taskElement.querySelector('button[onclick^="showDiff"]').setAttribute('disabled', 'true');
+            }
+        }
+
+
+        function showDiff(taskElement) {
+            const promptsDiv = taskElement.querySelector('.prompts');
+            const allPrompts = promptsDiv.querySelectorAll('.prompt');
+                    
+            if(allPrompts.length < 2) return; // At least two versions are required to compare
+            
+            // Clear previous diffs
+            allPrompts.forEach(prompt => {
+                const textarea = prompt.querySelector('textarea');
+                const diffDiv = prompt.querySelector('.diff-div');
+                if (diffDiv) diffDiv.remove(); // remove the diffDiv if it exists
+            });
+            
+            // Get the first version as base
+            const basePrompt = allPrompts[0].querySelector('textarea').value;
+
+            for(let i = 1; i < allPrompts.length; i++) {
+                const comparePrompt = allPrompts[i].querySelector('textarea');
+                const diffs = window.Diff.diffWords(basePrompt, comparePrompt.value);
+                const diffDiv = document.createElement('div'); // create a new div element to show diffs
+                diffDiv.className = 'diff-div'; // Assign a class name to the newly created div for future reference and styling
+                
+                // Create and append the label to diffDiv
+                const diffLabel = document.createElement('label');
+                diffLabel.innerText = 'Difference:';
+                diffDiv.appendChild(diffLabel);
+
+                // Format diffs and update div
+                diffDiv.innerHTML += diffs.map(diff => {
+                    const className = diff.added ? 'diff-inserted' : diff.removed ? 'diff-deleted' : '';
+                    return `<span class="${className}">${diff.value}</span>`;
+                }).join('');
+                
+                // append the div after the comparePrompt textarea
+                comparePrompt.parentElement.appendChild(diffDiv);
+            }
+        }
+
+
+
+        function toggleDiff(taskElement, btnElement) {
+            const action = btnElement.getAttribute('data-action'); // Get current action
+            const promptsDiv = taskElement.querySelector('.prompts');
+            const allPrompts = promptsDiv.querySelectorAll('.prompt');
+
+            if (action === 'show') {
+                if(allPrompts.length < 2) return alert('At least two versions are required to compare'); // Alert user if not enough versions to compare
+
+                // Clear previous diffs
+                allPrompts.forEach(prompt => {
+                    const textarea = prompt.querySelector('textarea');
+                    const diffDiv = prompt.querySelector('.diff-div');
+                    if (diffDiv) diffDiv.remove(); // remove the diffDiv if exists
+                });
+
+                // Get the first version as base
+                const basePrompt = allPrompts[0].querySelector('textarea').value;
+
+                for(let i=1; i<allPrompts.length; i++) {
+                    const comparePrompt = allPrompts[i].querySelector('textarea');
+                    const diffs = window.Diff.diffWords(basePrompt, comparePrompt.value);
+                    
+                    const diffDiv = document.createElement('div'); // create a new div element to show diffs
+                    diffDiv.className = 'diff-div'; // Assign a class name to the newly created div for future reference and styling
+                    
+                    // Create and append the label to diffDiv
+                    const diffLabel = document.createElement('label');
+                    diffLabel.innerText = 'Difference:';
+                    diffDiv.appendChild(diffLabel);
+
+                    // Format diffs and update div
+                    diffDiv.innerHTML += diffs.map(diff => {
+                        const className = diff.added ? 'diff-inserted' : diff.removed ? 'diff-deleted' : '';
+                        return `<span class="${className}">${diff.value}</span>`;
+                    }).join('');
+                    
+                    // append the div after the comparePrompt textarea
+                    comparePrompt.parentElement.appendChild(diffDiv);
+                }
+                
+                btnElement.setAttribute('data-action', 'hide'); // Change action to hide
+                btnElement.innerText = 'Hide Diff'; // Update button text to 'Hide Diff'
+            } else { // if current action is 'hide'
+                // Clear current diffs
+                allPrompts.forEach(prompt => {
+                    const diffDiv = prompt.querySelector('.diff-div');
+                    if (diffDiv) diffDiv.remove(); // remove the diffDiv if exists
+                });
+
+                btnElement.setAttribute('data-action', 'show'); // Change action to show
+                btnElement.innerText = 'Show Diff'; // Update button text to 'Show Diff'
+            }
+        }
+
+
+
+        function deleteSystemPromptVersion(taskElement) {
+            const systemPromptsDiv = taskElement.querySelector('.system-prompts');
+            const allSystemPrompts = systemPromptsDiv.querySelectorAll('.system-prompt');
+            
+            if (allSystemPrompts.length) {
+                const lastSystemPrompt = allSystemPrompts[allSystemPrompts.length - 1];
+                const textarea = lastSystemPrompt.querySelector('textarea');
+                const shouldDelete = !textarea.value || confirm('The textarea has a value. Are you sure you want to delete this system prompt?');
+                
+                if (shouldDelete) {
+                    lastSystemPrompt.remove();
+                } else {
+                    console.log('User cancelled the delete operation.');
+                }
+                
+            } else {
+                console.warn("No system prompts to delete");
+            }
+        }
+
+
+
+
+        document.getElementById('uploadYAML').addEventListener('change', upload);
+
+        function upload(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const yamlText = reader.result;
+                try {
+                    const jsonData = jsyaml.load(yamlText);
+                    createComponents(jsonData);
+                } catch(e) {
+                    console.error('Error Parsing YAML', e);
+                }
+            };
+            reader.readAsText(event.target.files[0]);
+        }
+
+
+        function createComponents(data) {
+            const tasksDiv = document.getElementById('tasks');
+            tasksDiv.innerHTML = ''; // Clear existing tasks
+
+            for (const taskName in data) {
+                const taskData = data[taskName];
+
+                const taskDiv = document.createElement('div');
+                taskDiv.className = 'task card p-4 mb-4';
+
+                const taskNameInput = document.createElement('input');
+                taskNameInput.type = 'text';
+                taskNameInput.className = 'task-name form-control mb-4';
+                taskNameInput.value = taskName;
+                taskDiv.appendChild(taskNameInput);
+                
+                // Creating Prompts
+                if (taskData.prompts) {
+                    const promptsDiv = document.createElement('div');
+                    promptsDiv.className = 'prompts';
+
+                    for (const version in taskData.prompts) {
+                        const promptData = taskData.prompts[version];
+                        const promptDiv = document.createElement('div');
+                        promptDiv.className = 'prompt ' + version;
+
+                        // Creating Label for each field
+                        const createLabel = function (textFor) {
+                            const label = document.createElement('label');
+                            label.setAttribute('for', textFor);
+                            label.textContent = textFor.charAt(0).toUpperCase() + textFor.slice(1) + ':';
+                            label.className = 'form-label';
+                            return label;
+                        }
+
+                        // Prompt Textarea
+                        promptDiv.appendChild(createLabel('prompt'));
+                        const promptTextArea = document.createElement('textarea');
+                        promptTextArea.id = 'prompt' + version;
+                        promptTextArea.name = 'prompt';
+                        promptTextArea.className = 'form-control mb-3';
+                        promptTextArea.placeholder = 'Prompt';
+                        promptTextArea.rows = '5';
+                        promptTextArea.value = promptData.prompt;
+                        promptDiv.appendChild(promptTextArea);
+
+                        // Creating form row for the rest of the input elements
+                        const formRowDiv = document.createElement('div');
+                        formRowDiv.className = 'form-row';
+
+                        const createInput = function (type, name, placeholder, value) {
+                            const colDiv = document.createElement('div');
+                            colDiv.className = 'col';
+                            colDiv.appendChild(createLabel(name));
+                            const input = document.createElement('input');
+                            input.type = type;
+                            input.id = name + version;
+                            input.name = name;
+                            input.className = 'form-control';
+                            input.placeholder = placeholder;
+                            input.value = value;
+                            colDiv.appendChild(input);
+                            return colDiv;
+                        };
+
+                        formRowDiv.appendChild(createInput('number', 'temperature', 'Temperature', promptData.temperature));
+                        formRowDiv.appendChild(createInput('number', 'top_p', 'top_p', promptData.top_p));
+                        formRowDiv.appendChild(createInput('number', 'max_tokens', 'Max Tokens', promptData.max_tokens));
+                        formRowDiv.appendChild(createInput('number', 'threshold', 'Threshold', promptData.threshold));
+
+                        // Adding Select Box for Status
+                        const colDiv = document.createElement('div');
+                        colDiv.className = 'col';
+                        colDiv.appendChild(createLabel('status'));
+                        const select = document.createElement('select');
+                        select.id = 'status' + version;
+                        select.name = 'status';
+                        select.className = 'form-control';
+                        ['','Evaluating', 'Best Prompt', 'Need to Evaluate'].forEach(optionValue => {
+                            const option = document.createElement('option');
+                            option.value = optionValue;
+                            option.textContent = optionValue;
+                            select.appendChild(option);
+                        });
+                        select.value = promptData.status; // set the select value
+                        colDiv.appendChild(select);
+                        formRowDiv.appendChild(colDiv);
+
+                        // Comment
+                        const commentContainer = document.createElement('div');
+                        commentContainer.className = 'comment-container mt-2';
+                        commentContainer.appendChild(createLabel('comment'));
+                        const commentInput = document.createElement('input');
+                        commentInput.type = 'text';
+                        commentInput.id = 'comment' + version;
+                        commentInput.name = 'comment';
+                        commentInput.className = 'form-control';
+                        commentInput.placeholder = 'Comment';
+                        commentInput.value = promptData.comment;
+                        commentContainer.appendChild(commentInput);
+
+                        // Appending form row and comment container to promptDiv
+                        promptDiv.appendChild(formRowDiv);
+
+                        promptDiv.appendChild(commentContainer);
+
+                        promptsDiv.appendChild(promptDiv);
+                    }
+
+                    
+
+                    taskDiv.appendChild(promptsDiv);
+
+                    // Creating buttons for adding and deleting prompt versions
+                    const buttonGroupDiv = document.createElement('div');
+                    buttonGroupDiv.className = 'button-group';
+
+                    // Add Prompt Version Button
+                    const addPromptBtn = document.createElement('button');
+                    addPromptBtn.className = 'btn btn-primary mt-3';
+                    addPromptBtn.textContent = 'Add Prompt Version';
+                    addPromptBtn.onclick = function() {
+                        addPromptVersion(taskDiv);
+                    };
+                    buttonGroupDiv.appendChild(addPromptBtn);
+
+                    // Delete Prompt Version Button
+                    const deletePromptBtn = document.createElement('button');
+                    deletePromptBtn.className = 'btn btn-primary mt-3 ml-2';
+                    deletePromptBtn.textContent = 'Delete Prompt Version';
+                    deletePromptBtn.onclick = function() {
+                        deletePromptVersion(taskDiv);
+                    };
+                    buttonGroupDiv.appendChild(deletePromptBtn);
+                    
+                    // Show Diff Button
+                    const toggleDiffBtn = document.createElement('button');
+                    toggleDiffBtn.className = 'btn btn-primary mt-3 ml-2 toggle-diff-btn'; // Added unique class here
+                    toggleDiffBtn.textContent = 'Show Diff';
+                    toggleDiffBtn.onclick = function() {
+                        toggleDiff(taskDiv, toggleDiffBtn);
+                    };
+                    // Enabling or Disabling the button based on the number of prompt versions available
+                    toggleDiffBtn.disabled = taskData.prompts && Object.keys(taskData.prompts).length < 2;
+
+                    buttonGroupDiv.appendChild(toggleDiffBtn); // Add this new button to the existing button group
+
+                    // Appending button group to taskDiv
+                    taskDiv.appendChild(buttonGroupDiv);
+                }
+
+                
+                // Creating System Prompts
+                if(taskData.system_prompts) {
+                    const systemPromptsDiv = document.createElement('div');
+                    systemPromptsDiv.className = 'system-prompts mt-4';
+                    
+                                            // Creating Label for each field
+                                            const createLabel = function (textFor) {
+                            const label = document.createElement('label');
+                            label.setAttribute('for', textFor);
+                            label.textContent = textFor.charAt(0).toUpperCase() + textFor.slice(1) + ':';
+                            label.className = 'form-label';
+                            return label;
+                        }
+
+                    for (const version in taskData.system_prompts) {
+                        const systemPromptData = taskData.system_prompts[version];
+                        const systemPromptDiv = document.createElement('div');
+                        systemPromptDiv.className = 'system-prompt ' + version;
+                        
+                        const systemPromptLabel = document.createElement('label');
+                        systemPromptLabel.textContent = 'System Prompt ' + version + ':';
+                        systemPromptDiv.appendChild(systemPromptLabel);
+                        //systemPromptDiv.appendChild(createLabel('Comment'));
+
+                        const systemPromptTextArea = document.createElement('textarea');
+                        systemPromptTextArea.name = 'prompt';
+                        systemPromptTextArea.className = 'form-control mb-3';
+                        systemPromptTextArea.placeholder = 'Prompt';
+                        systemPromptTextArea.rows = '5';
+                        systemPromptTextArea.value = systemPromptData.prompt;
+                        systemPromptDiv.appendChild(systemPromptTextArea);
+                        
+                        
+                        // Comment Container for System Prompt
+
+                        // Comment Container for System Prompt
+                        const systemCommentContainer = document.createElement('div');
+                        systemCommentContainer.className = 'comment-container mt-2';
+                        systemCommentContainer.appendChild(createLabel('systemComment' + version));
+                        const systemCommentInput = document.createElement('input');
+                        systemCommentInput.type = 'text';
+                        systemCommentInput.id = 'systemComment' + version;
+                        systemCommentInput.name = 'comment';
+                        systemCommentInput.className = 'form-control';
+                        systemCommentInput.placeholder = 'Comment';
+                        // Check if comment data exists for the system prompt, and assign it
+                        systemCommentInput.value = systemPromptData.comment ? systemPromptData.comment : '';
+                        systemCommentContainer.appendChild(systemCommentInput);
+
+                        // Append Comment Container to System Prompt Div
+                        systemPromptDiv.appendChild(systemCommentContainer);
+
+
+
+                        // Here add other elements and values as needed for system prompts.
+                        
+                        systemPromptsDiv.appendChild(systemPromptDiv);
+
+                        
+                    }
+                    
+                    taskDiv.appendChild(systemPromptsDiv);
+
+                    // Creating buttons for adding and deleting system prompts
+                    const systemButtonGroupDiv = document.createElement('div');
+                    systemButtonGroupDiv.className = 'button-group';
+
+                    // Add System Prompt Button
+                    const addSystemPromptBtn = document.createElement('button');
+                    addSystemPromptBtn.className = 'btn btn-primary mt-3';
+                    addSystemPromptBtn.textContent = 'Add System Prompt';
+                    addSystemPromptBtn.onclick = function() {
+                        addSystemPromptVersion(taskDiv);
+                    };
+                    systemButtonGroupDiv.appendChild(addSystemPromptBtn);
+
+                    // Delete System Prompt Button
+                    const deleteSystemPromptBtn = document.createElement('button');
+                    deleteSystemPromptBtn.className = 'btn btn-primary mt-3 ml-2';
+                    deleteSystemPromptBtn.textContent = 'Delete System Prompt';
+                    deleteSystemPromptBtn.onclick = function() {
+                        deleteSystemPromptVersion(taskDiv);
+                    };
+                    systemButtonGroupDiv.appendChild(deleteSystemPromptBtn);
+
+                    // Appending button group to taskDiv
+                    taskDiv.appendChild(systemButtonGroupDiv);
+                }
+
+                tasksDiv.appendChild(taskDiv);
+            }
+        }
+
+
+
+    </script>
+</body>
+
+</html>
