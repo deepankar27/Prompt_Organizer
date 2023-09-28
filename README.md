@@ -101,3 +101,7 @@ Passage.replace("##placeholder_1##", passage_content)
 ```
 
 Use the helper.py file to use all these methods.
+
+## 🌟 Special Acknowledgments: Powered by ChatGPT 🌟
+
+In the creation of the **Prompt Organizer**, a revolutionary entity has played an instrumental role, serving as the backbone of the development process – **ChatGPT by OpenAI**. I haven't written a single line of code! I wanted to give a try how well it can help me in the development cycle and it is here well tested well used, **Prompt Organizer**
