@@ -37,7 +37,7 @@
                 <div class="prompts">
                     <h4 class="mb-4">Prompts</h4>
                     <!-- Sample Prompt -->
-                    <div class="prompt version_1">
+                    <div class="prompt Version_1">
                         <label>Version_1:</label>
                         <label for="prompt">Prompt:</label>
                         <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
@@ -78,7 +78,7 @@
                     <h4 class="mb-4">System Prompts</h4>
                     <!-- Sample System Prompt -->
                     <div class="system-prompt version_1">
-                        <label>System Prompt version_1:</label>
+                        <label>System Prompt Version_1:</label>
                         <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
                         
                         <div class="comment-container">
@@ -412,6 +412,7 @@
 
 
         function showDiff(taskElement) {
+            console.log("Inside showDiff")
             const promptsDiv = taskElement.querySelector('.prompts');
             const allPrompts = promptsDiv.querySelectorAll('.prompt');
                     
@@ -435,7 +436,7 @@
                 
                 // Create and append the label to diffDiv
                 const diffLabel = document.createElement('label');
-                diffLabel.innerText = 'Difference:';
+                diffLabel.innerText = 'Compare Changes:';
                 diffDiv.appendChild(diffLabel);
 
                 // Format diffs and update div
@@ -452,7 +453,12 @@
 
 
         function toggleDiff(taskElement, btnElement) {
+            console.log("Inside toggleDiff")
             const action = btnElement.getAttribute('data-action'); // Get current action
+
+            // Debug log to ensure this method is being called.
+            console.log("Toggle Diff Called, action:", action);
+
             const promptsDiv = taskElement.querySelector('.prompts');
             const allPrompts = promptsDiv.querySelectorAll('.prompt');
 
@@ -476,9 +482,11 @@
                     const diffDiv = document.createElement('div'); // create a new div element to show diffs
                     diffDiv.className = 'diff-div'; // Assign a class name to the newly created div for future reference and styling
                     
+                    diffDiv.style.marginTop = '10px'; // You can adjust the '10px' to whatever suits your design
+
                     // Create and append the label to diffDiv
                     const diffLabel = document.createElement('label');
-                    diffLabel.innerText = 'Difference:';
+                    diffLabel.innerText = 'Compare Changes:';
                     diffDiv.appendChild(diffLabel);
 
                     // Format diffs and update div
@@ -530,7 +538,7 @@
 
 
 
-        document.getElementById('uploadYAML').addEventListener('change', upload);
+        //document.getElementById('uploadYAML').addEventListener('change', upload);
 
         function upload(event) {
             const reader = new FileReader();
@@ -565,8 +573,14 @@
                 
                 // Creating Prompts
                 if (taskData.prompts) {
+
                     const promptsDiv = document.createElement('div');
                     promptsDiv.className = 'prompts';
+
+                    const promptsHeader = document.createElement('h4');
+                    promptsHeader.className = 'mb-4';
+                    promptsHeader.textContent = 'Prompts';
+                    promptsDiv.appendChild(promptsHeader);
 
                     for (const version in taskData.prompts) {
                         const promptData = taskData.prompts[version];
@@ -583,7 +597,7 @@
                         }
 
                         // Prompt Textarea
-                        promptDiv.appendChild(createLabel('prompt'));
+                        promptDiv.appendChild(createLabel(version));
                         const promptTextArea = document.createElement('textarea');
                         promptTextArea.id = 'prompt' + version;
                         promptTextArea.name = 'prompt';
@@ -686,6 +700,7 @@
                     const toggleDiffBtn = document.createElement('button');
                     toggleDiffBtn.className = 'btn btn-primary mt-3 ml-2 toggle-diff-btn'; // Added unique class here
                     toggleDiffBtn.textContent = 'Show Diff';
+                    toggleDiffBtn.setAttribute('data-action', 'show'); // Set 'data-action' attribute to 'show'
                     toggleDiffBtn.onclick = function() {
                         toggleDiff(taskDiv, toggleDiffBtn);
                     };
@@ -701,17 +716,24 @@
                 
                 // Creating System Prompts
                 if(taskData.system_prompts) {
+                    
+
                     const systemPromptsDiv = document.createElement('div');
                     systemPromptsDiv.className = 'system-prompts mt-4';
                     
-                                            // Creating Label for each field
-                                            const createLabel = function (textFor) {
-                            const label = document.createElement('label');
-                            label.setAttribute('for', textFor);
-                            label.textContent = textFor.charAt(0).toUpperCase() + textFor.slice(1) + ':';
-                            label.className = 'form-label';
-                            return label;
-                        }
+                    const systemPromptsHeader = document.createElement('h4');
+                    systemPromptsHeader.className = 'mb-4';
+                    systemPromptsHeader.textContent = 'System Prompts';
+                    systemPromptsDiv.appendChild(systemPromptsHeader);
+
+                    // Creating Label for each field
+                    const createLabel = function (textFor) {
+                    const label = document.createElement('label');
+                    label.setAttribute('for', textFor);
+                    label.textContent = textFor.charAt(0).toUpperCase() + textFor.slice(1) + ':';
+                    label.className = 'form-label';
+                    return label;
+                    }
 
                     for (const version in taskData.system_prompts) {
                         const systemPromptData = taskData.system_prompts[version];
@@ -719,7 +741,8 @@
                         systemPromptDiv.className = 'system-prompt ' + version;
                         
                         const systemPromptLabel = document.createElement('label');
-                        systemPromptLabel.textContent = 'System Prompt ' + version + ':';
+                        console.log("..."+version)
+                        systemPromptLabel.textContent = version.charAt(0).toUpperCase() + version.slice(1) + ':';
                         systemPromptDiv.appendChild(systemPromptLabel);
                         //systemPromptDiv.appendChild(createLabel('Comment'));
 
@@ -737,7 +760,7 @@
                         // Comment Container for System Prompt
                         const systemCommentContainer = document.createElement('div');
                         systemCommentContainer.className = 'comment-container mt-2';
-                        systemCommentContainer.appendChild(createLabel('systemComment' + version));
+                        systemCommentContainer.appendChild(createLabel('Comment'));
                         const systemCommentInput = document.createElement('input');
                         systemCommentInput.type = 'text';
                         systemCommentInput.id = 'systemComment' + version;

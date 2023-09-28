@@ -10,7 +10,6 @@ def save_yaml():
 
     data = request.json
     content = data.get('content', '')
-    print("I am here...")
 
     try:
         # Parse YAML to check for errors before saving
