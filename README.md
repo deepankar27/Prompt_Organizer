@@ -1,5 +1,6 @@
+# 🗂️➡️📝 Prompt Organizer
 
-# Managing Prompts with Ease: Prompt Organizer
+## Managing Prompts with Ease.
 
 In the realm of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
