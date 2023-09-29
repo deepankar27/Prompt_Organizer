@@ -52,8 +52,6 @@ This application is currently designed for individual use, with plans for future
 https://github.com/deepankar27/Prompt_Organizer/assets/3585068/17a7db22-81a2-4e82-968c-d6537b0c305f
 
 
->>>>>>> origin
-
 ## How to run the app?
 Go to the "Prompt Organizer" folder and run:
 
