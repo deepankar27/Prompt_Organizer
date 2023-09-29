@@ -124,12 +124,12 @@ Passage.replace("##placeholder_1##", passage_content)
 Use the helper.py file to use all these methods.
 
 ## Future ideas 💡
-1. Setup git integration
-2. Design for multi-user use
-3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation
-4. Need to evaluate possibility of integrations with MLops
+1. Setup git integration.
+2. Design for multi-user use.
+3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation.
+4. Need to evaluate possibility of integrations with MLops.
 
-All with ease of use 
+All with ease of use.
 
 ## 🌟 Special Acknowledgments: Powered by ChatGPT 🌟
 
