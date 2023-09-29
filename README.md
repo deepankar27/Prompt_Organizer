@@ -8,7 +8,7 @@
 
 In the area of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
-The unorganized way of managing prompts makes work tough, so we bring a structured approach to help prompt engineers & developers track, share, and handle prompts easily with their team. The **Prompt Organizer**.
+An experimental open-source attempt to make life easy for prompt engineers & developers. The unorganized way of managing prompts makes work tough, so we bring a structured approach to help prompt engineers & developers track, share, and handle prompts easily with their team. The **Prompt Organizer**.
 
 ## Features of the Prompt Organizer Pro.
 1. Task-Based Organization:
