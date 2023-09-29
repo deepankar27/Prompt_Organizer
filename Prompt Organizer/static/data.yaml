@@ -14,7 +14,7 @@ Task_1:
       top_p: ""
       max_tokens: ""
       threshold: ""
-      status: "Yet to Evaluate"
+      status: "Evaluating"
       comment: ""
   system_prompts:
     version_1:

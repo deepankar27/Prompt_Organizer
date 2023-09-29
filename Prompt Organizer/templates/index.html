@@ -48,7 +48,7 @@
                             <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Threshold" /></div>
                             <div class="col">
                                 <label for="status">Status:</label>
-                                <select name="status" class="form-control">
+                                <select name="status" class="form-control status-select">
                                     <option value="" selected disabled>Select Status</option>
                                     <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
@@ -137,9 +137,23 @@
                 .catch(err => {
                     console.error('Fetch Error:', err);
                 });
-
+            
+            // Select all elements with class 'status-select' and add an event listener to each
+            document.querySelectorAll('.status-select').forEach(selectElement => {
+            selectElement.addEventListener('change', function() {
+                // Check if the selected value is 'best_prompt'
+                if (this.value === 'Best Prompt') {
+                    // Find the closest parent with the class 'prompt' and change its background color to green
+                    this.closest('.prompt').style.backgroundColor = '#dce8d7';
+                } else {
+                    // If the value is changed from 'best_prompt' to something else, reset the background color
+                    this.closest('.prompt').style.backgroundColor = ''; // you could set this to a default color if you have one
+                }
+            });
+            });
 
         });
+
 
 
         function loadBlankPlaceholders() {
@@ -174,7 +188,7 @@
                             <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
                             <div class="col">
                                 <label for="status">Status:</label>
-                                <select name="status" class="form-control">
+                                <select name="status" class="form-control status-select">
                                     <option value="" selected disabled>Select Status</option>
                                     <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
@@ -322,7 +336,7 @@
                             <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
                             <div class="col">
                                 <label for="status">Status:</label>
-                                <select name="status" class="form-control">
+                                <select name="status" class="form-control status-select">
                                     <option value="" selected disabled>Select Status</option>
                                     <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
@@ -638,7 +652,20 @@
                         const select = document.createElement('select');
                         select.id = 'status' + version;
                         select.name = 'status';
-                        select.className = 'form-control';
+                        select.className = 'form-control status-select';
+
+                        select.addEventListener('change', function() {
+                        if (this.value === 'Best Prompt') {
+                            this.closest('.prompt').style.backgroundColor = '#dce8d7';
+                        } else {
+                            this.closest('.prompt').style.backgroundColor = '';
+                        }
+                        });
+                        
+                        if (promptData.status === 'Best Prompt') {
+                            promptDiv.style.backgroundColor = '#dce8d7'; // set the background color to light green if status is 'best_prompt'
+                        }
+
                         ['','Evaluating', 'Best Prompt', 'Yet to Evaluate'].forEach(optionValue => {
                             const option = document.createElement('option');
                             option.value = optionValue;
