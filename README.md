@@ -124,7 +124,7 @@ prompt_passage = prompt_passage.replace("##placeholder_1##", passage_content)
 
 Use the helper.py file to use all these methods.
 
-### How to make a OpenAI call with Prompt Manager helper file.
+### How to make OpenAI call with Prompt Manager helper file?
 
 ```
 openai.api_key = 'your-api-key-here'
@@ -139,7 +139,7 @@ prompt_passage = prompt_passage.replace("##placeholder_1##", passage_content)
 
 response = openai.ChatCompletion.create(
     model = "gpt-3.5-turbo",
-	temperature = prompt_param["temperature"],
+    temperature = prompt_param["temperature"],
     top_p = prompt_param["top_p"],
     max_tokens = prompt_param["max_tokens"],
     messages=[
