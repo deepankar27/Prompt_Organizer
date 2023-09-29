@@ -4,13 +4,13 @@
   <img src="assets/organize_llama.jpg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
-## Managing LLM Prompts with Ease
+## Managing LLM Prompts with Ease.
 
 In the realm of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
 The lack of a structured approach to manage prompts efficiently often makes it difficult to navigate through them, causing a significant impediment in the workflow. Understanding this persistent issue, we introduce an application that serves as a beacon of relief: The **Prompt Organizer**.
 
-## Features of the Prompt Organizer Pro:
+## Features of the Prompt Organizer Pro.
 1. Task-Based Organization:
 Users can organize prompts under different tasks (Summarization, Topic Discovery, Intent identification etc), allowing for a clear and categorized view of each prompt.
 
@@ -46,7 +46,7 @@ This application is currently designed for individual use, with plans for future
 </p>
 
 
-## How the app works: 
+## How the app works?
 
 https://github.com/deepankar27/Prompt_Organizer/assets/3585068/17a7db22-81a2-4e82-968c-d6537b0c305f
 
@@ -58,9 +58,9 @@ Go to the "Prompt Organizer" folder and run:
 python app.py
 ```
 
-## How to use the YAML file:
+## How to use the YAML file?
 
-### How to read prompt from yaml:
+### How to read prompt from yaml?
 Load the yaml file using this method:
 ```
 import yaml
@@ -122,6 +122,14 @@ Passage.replace("##placeholder_1##", passage_content)
 ```
 
 Use the helper.py file to use all these methods.
+
+## Future ideas!!!
+1. Setup git integration
+2. Design for multi-user use
+3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation
+4. Need to evaluate possibility of integrations with MLops
+
+All with ease of use 
 
 ## 🌟 Special Acknowledgments: Powered by ChatGPT 🌟
 
