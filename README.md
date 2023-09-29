@@ -1,7 +1,7 @@
 # 🗂️➡️📝 Prompt Organizer
 
 <p align="center">
-  <img src="assets/managed_llama.jpg" width="500" height="500" alt="Prompt Organizer">
+  <img src="assets/organize_llama.jpg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
 ## Managing LLM Prompts with Ease
