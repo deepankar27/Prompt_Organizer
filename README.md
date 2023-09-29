@@ -40,7 +40,7 @@ This application seamlessly facilitates developers by allowing the direct incorp
 
 ## How to run the app?
 ```
-python app.py
+python Prompt Organizer/app.py
 ```
 
 ## How to use the YAML file:
