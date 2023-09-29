@@ -1,5 +1,9 @@
 # 🗂️➡️📝 Prompt Organizer
 
+<p align="center">
+  <img src="assets/managed_llama.jpg" width="500" height="500" alt="Prompt Organizer">
+</p>
+
 ## Managing LLM Prompts with Ease
 
 In the realm of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
@@ -40,6 +44,10 @@ This application is currently designed for individual use, with plans for future
 <p align="center">
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
 </p>
+
+<video width="400" height="500" controls>
+  <source src="assets/Product_introduction.mp4" type="video/mp4">
+</video>
 
 ## How to run the app?
 Go to the "Prompt Organizer" folder and run:
