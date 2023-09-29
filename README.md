@@ -57,6 +57,7 @@ Go to the "Prompt Organizer" folder and run:
 ```
 python app.py
 ```
+I have used python 3.8
 
 ## How to use the YAML file?
 
