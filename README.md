@@ -46,7 +46,6 @@ This application is currently designed for individual use, with plans for future
 </p>
 
 
-=======
 ## How the app works: 
 
 https://github.com/deepankar27/Prompt_Organizer/assets/3585068/17a7db22-81a2-4e82-968c-d6537b0c305f
