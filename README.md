@@ -61,7 +61,7 @@ python app.py
 ## How to use the YAML file?
 
 ### How to read prompt from yaml?
-Load the yaml file using this method:
+Download the yaml file from the **Prompt Organizer** and load it using this method:
 ```
 import yaml
 
