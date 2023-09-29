@@ -123,7 +123,7 @@ Passage.replace("##placeholder_1##", passage_content)
 
 Use the helper.py file to use all these methods.
 
-## Future ideas!!!
+## Future ideas 💡
 1. Setup git integration
 2. Design for multi-user use
 3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation
