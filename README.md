@@ -1,6 +1,6 @@
 # 🗂️➡️📝 Prompt Organizer
 
-## Managing Prompts with Ease.
+## Managing LLM Prompts with Ease
 
 In the realm of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
@@ -37,6 +37,11 @@ This application seamlessly facilitates developers by allowing the direct incorp
 <p align="center">
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
 </p>
+
+## How to run the app?
+```
+python app.py
+```
 
 ## How to use the YAML file:
 
