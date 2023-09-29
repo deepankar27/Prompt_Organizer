@@ -117,11 +117,41 @@ Example Prompt:
 Replace the **##placeholder_1##** dynamically with the input passage.
 
 ```
-Passage = get_prompt('Intent',1)
-Passage.replace("##placeholder_1##", passage_content)
+passage_content = "Your passage data"
+prompt_passage = get_prompt('Intent',1)
+prompt_passage = prompt_passage.replace("##placeholder_1##", passage_content)
 ```
 
 Use the helper.py file to use all these methods.
+
+### How to make a OpenAI call with Prompt Manager helper file.
+
+```
+openai.api_key = 'your-api-key-here'
+
+passage_content = "Your data"
+
+prompt_passage = get_prompt("Intent", 1) # This will provide you the prompt for the specified version and task.
+system_prompt = get_sysprompt("Intent", 1) # This will provide you the system prompt for the specified version and task.
+prompt_param = get_parameters("Intent", 1) # This will provide you the all parameters for the specified version and task.
+
+prompt_passage = prompt_passage.replace("##placeholder_1##", passage_content)
+
+response = openai.ChatCompletion.create(
+    model = "gpt-3.5-turbo",
+	temperature = prompt_param["temperature"],
+    top_p = prompt_param["top_p"],
+    max_tokens = prompt_param["max_tokens"],
+    messages=[
+        {"role": "system", "content": prompt_passage},
+        {"role": "user", "content": system_prompt},
+    ]
+)
+
+# Extracting response
+answer = response['choices'][0]['message']['content']
+print(answer)
+```
 
 ## Future ideas 💡
 1. Setup git integration.
