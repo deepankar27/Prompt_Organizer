@@ -50,7 +50,7 @@
                                 <label for="status">Status:</label>
                                 <select name="status" class="form-control">
                                     <option value="" selected disabled>Select Status</option>
-                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
                                     <option value="best_prompt">Best Prompt</option>
                                     
@@ -176,7 +176,7 @@
                                 <label for="status">Status:</label>
                                 <select name="status" class="form-control">
                                     <option value="" selected disabled>Select Status</option>
-                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
                                     <option value="best_prompt">Best Prompt</option>
                                     
@@ -259,7 +259,7 @@
             prompts.forEach(prompt => {
                 const verName = prompt.className.split(' ')[1];
                 output += `    ${verName}:\n`;
-                const inputs = prompt.querySelectorAll('input, textarea');
+                const inputs = prompt.querySelectorAll('input, textarea, select');
                 inputs.forEach(input => {
                     output += `      ${input.name}: "${input.value}"\n`;
                 });
@@ -324,7 +324,7 @@
                                 <label for="status">Status:</label>
                                 <select name="status" class="form-control">
                                     <option value="" selected disabled>Select Status</option>
-                                    <option value="need_to_evaluate">Yet to Evaluate</option>
+                                    <option value="Yet to Evaluate">Yet to Evaluate</option>
                                     <option value="evaluating">Evaluating</option>
                                     <option value="best_prompt">Best Prompt</option>
                                     
@@ -639,7 +639,7 @@
                         select.id = 'status' + version;
                         select.name = 'status';
                         select.className = 'form-control';
-                        ['','Evaluating', 'Best Prompt', 'Need to Evaluate'].forEach(optionValue => {
+                        ['','Evaluating', 'Best Prompt', 'Yet to Evaluate'].forEach(optionValue => {
                             const option = document.createElement('option');
                             option.value = optionValue;
                             option.textContent = optionValue;
@@ -741,7 +741,7 @@
                         systemPromptDiv.className = 'system-prompt ' + version;
                         
                         const systemPromptLabel = document.createElement('label');
-                        console.log("..."+version)
+                        //console.log("..."+version)
                         systemPromptLabel.textContent = version.charAt(0).toUpperCase() + version.slice(1) + ':';
                         systemPromptDiv.appendChild(systemPromptLabel);
                         //systemPromptDiv.appendChild(createLabel('Comment'));

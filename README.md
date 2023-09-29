@@ -34,13 +34,18 @@ Users can save their progress and download the organized prompts in YAML format,
 9. YAML Integration for Developer Pipelines:
 This application seamlessly facilitates developers by allowing the direct incorporation of YAML files into their development pipelines, making the development process more intuitive and less error-prone.
 
+10. Single user app:
+This application is currently designed for individual use, with plans for future upgrades to support multiple users.
+
 <p align="center">
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
 ## How to run the app?
+Go to the "Prompt Organizer" folder and run:
+
 ```
-python Prompt Organizer/app.py
+python app.py
 ```
 
 ## How to use the YAML file:

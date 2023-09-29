@@ -1,23 +1,25 @@
-Intent:
+Task_1:
   prompts:
-    version_1:
-      prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the passage. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1##"
-      temperature: "0.02"
-      top_p: "0.02"
-      max_tokens: "10"
-      threshold: "0.02"
-      comment: ""
-    version_2:
-      prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the passage contents. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1##"
+    Version_1:
+      prompt: "I am giving you a transcript which is noisy and you have to find the most important intents which are having high discussion value, important and represent the entire call conversation. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1##"
       temperature: ""
       top_p: ""
       max_tokens: ""
       threshold: ""
+      status: "Best Prompt"
+      comment: ""
+    version_2:
+      prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the entire passage content. All the intents must be in string format and relevancy score must be in integer format.
+Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations.
+Transcript:
+##placeholder_1##"
+      temperature: ""
+      top_p: ""
+      max_tokens: ""
+      threshold: ""
+      status: "Yet to Evaluate"
       comment: ""
   system_prompts:
     version_1:
-      prompt: "be helpful"
-      comment: ""
-    version_2:
-      prompt: "be helpful"
+      prompt: ""
       comment: ""
