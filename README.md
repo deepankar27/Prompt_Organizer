@@ -45,9 +45,14 @@ This application is currently designed for individual use, with plans for future
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
-<video width="400" height="500" controls>
-  <source src="assets/Product_introduction.mp4" type="video/mp4">
-</video>
+
+=======
+## How the app works: 
+
+https://github.com/deepankar27/Prompt_Organizer/assets/3585068/17a7db22-81a2-4e82-968c-d6537b0c305f
+
+
+>>>>>>> origin
 
 ## How to run the app?
 Go to the "Prompt Organizer" folder and run:
