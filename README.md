@@ -164,10 +164,12 @@ By adhering to the outlined steps, you can adopt a structured and systematic app
 For now, I run this app from my project to avoid going back and forth with the YAML file. All my modifications stay at the project level. The idea is, in the near future, to make this integration seamless.
 
 ## Future ideas 💡
-1. Setup git integration.
-2. Design for multi-user use.
-3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation.
-4. And more...
+1. Auto-save.
+2. Setup git integration.
+3. Design for multi-user use.
+4. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation.
+
+And more...
 
 All with ease of use.
 
