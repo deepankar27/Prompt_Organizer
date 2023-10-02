@@ -158,7 +158,7 @@ For now, I run this app from my project to avoid going back and forth with the Y
 ### How to use it for LLM based application develoment:
 
 <p align="center">
-  <img src="assets/Process_step.jpg" width="400" height="300" alt="Flow">
+  <img src="assets/Process_step.jpg" width="600" height="400" alt="Flow">
 </p>
 
 By adhering to the outlined steps, you can adopt a structured and systematic approach. Prompt Organizer empowers you to design, meticulously examine, and implement your prompts with assurance. This leads to the development of advanced and reliable AI applications.
