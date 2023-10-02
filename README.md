@@ -35,11 +35,9 @@ Alongside user prompts, the app also enables the management of system prompts, e
 8. Save and Download:
 Users can save their progress and download the organized prompts in YAML format, facilitating easy sharing and storage.
 
-9. YAML Integration for Developer Pipelines:
-This application seamlessly facilitates developers by allowing the direct incorporation of YAML files into their development pipelines, making the development process more intuitive and less error-prone.
+9. YAML Integration for Developer Pipelines: This application seamlessly facilitates developers by allowing the direct incorporation of YAML files into their development pipelines, making the development process more intuitive and less error-prone.
 
-10. Single user app:
-This application is currently designed for individual use, with plans for future upgrades to support multiple users.
+10. Single user app: This application is currently designed for individual use, with plans for future upgrades to support multiple users.
 
 <p align="center">
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
@@ -154,11 +152,22 @@ answer = response['choices'][0]['message']['content']
 print(answer)
 ```
 
+### This could be helpful 📘
+For now, I run this app from my project to avoid going back and forth with the YAML file. All my modifications stay at the project level. The idea is, in the near future, to make this integration seamless.
+
+### How to use it for LLM based application develoment:
+
+<p align="center">
+  <img src="assets/Process_step.jpg" width="500" height="500" alt="Flow">
+</p>
+
+By adhering to the outlined steps, you can adopt a structured and systematic approach. Prompt Organizer empowers you to design, meticulously examine, and implement your prompts with assurance. This leads to the development of advanced and reliable AI applications.
+
 ## Future ideas 💡
 1. Setup git integration.
 2. Design for multi-user use.
 3. Integration of data and OpenAI/ Custom LLM APIs for auto evaluation.
-4. Need to evaluate possibility of integrations with MLops.
+4. And more...
 
 All with ease of use.
 
