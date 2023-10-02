@@ -228,8 +228,10 @@
             <div id="tasks">
             <!-- Sample Task -->
             <div class="task card p-4 mb-4" data-collapsed="false">
-                <i class="fas fa-chevron-down toggle-icon" onclick="toggleTask(this)" style="cursor:pointer; margin-left:10px;"></i>
-                <input type="text" class="task-name form-control mb-4" value="Task_1" />
+                <div class="task-header">
+                    <i class="fas fa-chevron-down toggle-icon" onclick="toggleTask(this)" style="cursor:pointer; margin-left:10px;"></i>
+                    <input type="text" class="task-name form-control mb-4" value="Task_1" />
+                </div>
                 <div class="collapsible-content">              
                     <!-- Prompts UI -->
                     <div class="prompts">

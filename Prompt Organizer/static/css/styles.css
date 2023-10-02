@@ -117,5 +117,28 @@ label {
   .task-name { /* if the input has a class task-name */
     align-self: center; /* align self is used to align the individual flex item (input) */
   }
+
+  .toggle-icon-wrapper {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.3s ease;
+    padding: 4px; /* Optional: for a little more space around the icon */
+}
+
+.toggle-icon-wrapper:hover {
+    background: rgba(0, 0, 0, 0.1); /* Optional: for a hover effect */
+}
+
+.toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.toggled {
+    transform: rotate(180deg);
+}
+
   
   
