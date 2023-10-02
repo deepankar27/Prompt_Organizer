@@ -18,6 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/3.13.1/js-yaml.min.js"></script>
     
     <script src="{{ url_for('static', filename='js/diff.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 </head>
 
@@ -25,77 +26,81 @@
     <header>
         <h1>Prompt Organizer Pro</h1>
     </header>
+    
 
     <div class="container mt-4" id="app">
         <!-- Task UI -->
         <div id="tasks">
             <!-- Sample Task -->
-            <div class="task card p-4 mb-4">
-                <input type="text" class="task-name form-control mb-4" value="Task_1" />
-
-                <!-- Prompts UI -->
-                <div class="prompts">
-                    <h4 class="mb-4">Prompts</h4>
-                    <!-- Sample Prompt -->
-                    <div class="prompt Version_1">
-                        <label>Version_1:</label>
-                        <label for="prompt">Prompt:</label>
-                        <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
-                        <div class="form-row">
-                            <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
-                            <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="top_p" /></div>
-                            <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Max Tokens" /></div>
-                            <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Threshold" /></div>
-                            <div class="col">
-                                <label for="status">Status:</label>
-                                <select name="status" class="form-control status-select">
-                                    <option value="" selected disabled>Select Status</option>
-                                    <option value="Yet to Evaluate">Yet to Evaluate</option>
-                                    <option value="evaluating">Evaluating</option>
-                                    <option value="best_prompt">Best Prompt</option>
-                                    
-                                </select>
+            <div class="task card p-4 mb-4 " data-collapsed="true">
+                <div class="task-header">
+                    <i class="fas fa-chevron-down toggle-icon" onclick="toggleTask(this)" style="cursor:pointer; margin-left:10px;"></i>
+                    <input type="text" class="task-name form-control mb-4" value="Task_1" />
+                </div>
+                <div class="collapsible-content">
+                    <!-- Prompts UI -->
+                    <div class="prompts">
+                        <h4 class="mb-4">Prompts</h4>
+                        <!-- Sample Prompt -->
+                        <div class="prompt Version_1">
+                            <label>Version_1:</label>
+                            <label for="prompt">Prompt:</label>
+                            <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+                            <div class="form-row">
+                                <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
+                                <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="top_p" /></div>
+                                <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Max Tokens" /></div>
+                                <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Threshold" /></div>
+                                <div class="col">
+                                    <label for="status">Status:</label>
+                                    <select name="status" class="form-control status-select">
+                                        <option value="" selected disabled>Select Status</option>
+                                        <option value="Yet to Evaluate">Yet to Evaluate</option>
+                                        <option value="evaluating">Evaluating</option>
+                                        <option value="best_prompt">Best Prompt</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="comment-container">
+                                <label for="comment">Comment:</label>
+                                <input type="text" name="comment" class="form-control" placeholder="Comment" />
                             </div>
                         </div>
-                        <div class="comment-container">
-                            <label for="comment">Comment:</label>
-                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
-                        </div>
-                    </div>
-                    
-                </div>
-                
-                
-                <div class="button-group">
-                    <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
-                    <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
-                    <!-- Add this where you have your "Delete Prompt Version" Button -->
-                    <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
-
-                </div>                
-                <!-- System Prompts UI -->
-                <div class="system-prompts mt-4">
-                    <h4 class="mb-4">System Prompts</h4>
-                    <!-- Sample System Prompt -->
-                    <div class="system-prompt version_1">
-                        <label>System Prompt Version_1:</label>
-                        <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
                         
-                        <div class="comment-container">
-                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
-                        </div>
-
                     </div>
                     
-                </div>
-                
-                <div class="button-group">
-                    <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
-                    <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
+                    
+                    <div class="button-group">
+                        <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
+                        <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
+                        <!-- Add this where you have your "Delete Prompt Version" Button -->
+                        <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
+
+                    </div>                
+                    <!-- System Prompts UI -->
+                    <div class="system-prompts mt-4">
+                        <h4 class="mb-4">System Prompts</h4>
+                        <!-- Sample System Prompt -->
+                        <div class="system-prompt version_1">
+                            <label>System Prompt Version_1:</label>
+                            <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+                            
+                            <div class="comment-container">
+                                <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                            </div>
+
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="button-group">
+                        <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
+                        <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
+                    </div>
                 </div>
             </div>
         </div>
-
         <!-- Buttons -->
         <div class="button-container">
             <button onclick="addTask()" class="btn btn-success">Add Task</button>
@@ -114,6 +119,58 @@
     <script>
         let taskCount = 1;
 
+        document.addEventListener("DOMContentLoaded", function() {
+            console.log('Page Loaded');
+
+            const tasks = document.getElementsByClassName('task');
+            Array.from(tasks).forEach(task => {
+                task.setAttribute('data-collapsed', 'false');
+                
+                const chevronIcon = task.querySelector('.toggle-icon');
+                if (chevronIcon) {
+                    chevronIcon.className = 'fas fa-chevron-down toggle-icon'; // initial state as down
+                }
+                
+                Array.from(task.children).forEach(child => {
+                    if(child !== chevronIcon) {
+                        child.style.display = '';
+                    }
+                });
+            });
+        });
+
+
+        function collapseTasksIfExist() {
+            const tasks = document.getElementsByClassName('task');
+            if(tasks.length > 0) { // If tasks exist
+                Array.from(tasks).forEach(task => {
+                    const toggleIcon = task.querySelector('.toggle-icon');
+                    if (toggleIcon) {
+                        task.setAttribute('data-collapsed', 'true');
+                        toggleTask(toggleIcon); // toggleTask should handle changing icon and collapsing content
+                    }
+                });
+            } else { // If no tasks exist, set data-collapsed to false
+                Array.from(tasks).forEach(task => {
+                    task.setAttribute('data-collapsed', 'false');
+                });
+            }
+        }
+
+        function toggleTask(icon) {
+            const taskDiv = icon.closest('.task'); 
+            const collapsibleContent = taskDiv.querySelector('.collapsible-content');
+            const taskNameInput = taskDiv.querySelector('.task-name');
+            const isCurrentlyCollapsed = taskDiv.getAttribute('data-collapsed') === 'true';
+            
+            // Toggle the collapsibleContent and readonly state of taskNameInput
+            collapsibleContent.style.display = isCurrentlyCollapsed ? '' : 'none';
+            taskNameInput.readOnly = !isCurrentlyCollapsed;
+            taskDiv.setAttribute('data-collapsed', (!isCurrentlyCollapsed).toString());
+            
+            // Update the icon.
+            icon.className = isCurrentlyCollapsed ? 'fas fa-chevron-down toggle-icon' : 'fas fa-chevron-up toggle-icon';
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
 
@@ -170,66 +227,68 @@
             const taskTemplate = `
             <div id="tasks">
             <!-- Sample Task -->
-            <div class="task card p-4 mb-4">
+            <div class="task card p-4 mb-4" data-collapsed="false">
+                <i class="fas fa-chevron-down toggle-icon" onclick="toggleTask(this)" style="cursor:pointer; margin-left:10px;"></i>
                 <input type="text" class="task-name form-control mb-4" value="Task_1" />
-
-                <!-- Prompts UI -->
-                <div class="prompts">
-                    <h4 class="mb-4">Prompts</h4>
-                    <!-- Sample Prompt -->
-                    <div class="prompt version_1">
-                        <label>Version_1:</label>
-                        <label for="prompt">Prompt:</label>
-                        <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Add Prompt" rows="5"></textarea>
-                        <div class="form-row">
-                            <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
-                            <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="Set top_p" /></div>
-                            <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Set Max Tokens" /></div>
-                            <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
-                            <div class="col">
-                                <label for="status">Status:</label>
-                                <select name="status" class="form-control status-select">
-                                    <option value="" selected disabled>Select Status</option>
-                                    <option value="Yet to Evaluate">Yet to Evaluate</option>
-                                    <option value="evaluating">Evaluating</option>
-                                    <option value="best_prompt">Best Prompt</option>
-                                    
-                                </select>
+                <div class="collapsible-content">              
+                    <!-- Prompts UI -->
+                    <div class="prompts">
+                        <h4 class="mb-4">Prompts</h4>
+                        <!-- Sample Prompt -->
+                        <div class="prompt version_1">
+                            <label>Version_1:</label>
+                            <label for="prompt">Prompt:</label>
+                            <textarea id="prompt" name="prompt" class="form-control mb-3" placeholder="Add Prompt" rows="5"></textarea>
+                            <div class="form-row">
+                                <div class="col"><label for="temperature">Temperature:</label><input type="number" step="0.01" min="0" max="1" name="temperature" class="form-control" placeholder="Set Temperature" /></div>
+                                <div class="col"><label for="top_p">Top_p:</label><input type="number" step="0.01" min="0" max="1" name="top_p" class="form-control" placeholder="Set top_p" /></div>
+                                <div class="col"><label for="max_tokens">Max Tokens:</label><input type="number" name="max_tokens" class="form-control" placeholder="Set Max Tokens" /></div>
+                                <div class="col"><label for="threshold">Threshold:</label><input type="number" step="0.01" min="0" max="1" name="threshold" class="form-control" placeholder="Set Threshold" /></div>
+                                <div class="col">
+                                    <label for="status">Status:</label>
+                                    <select name="status" class="form-control status-select">
+                                        <option value="" selected disabled>Select Status</option>
+                                        <option value="Yet to Evaluate">Yet to Evaluate</option>
+                                        <option value="evaluating">Evaluating</option>
+                                        <option value="best_prompt">Best Prompt</option>
+                                        
+                                    </select>
+                                </div>
+                                
                             </div>
-                            
-                        </div>
-                        <div class="comment-container">
-                            <label for="comment">Comment:</label>
-                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                            <div class="comment-container">
+                                <label for="comment">Comment:</label>
+                                <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="button-group">
-                    <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
-                    <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
-                    <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
-                </div>
+                    <div class="button-group">
+                        <button onclick="addPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add Prompt Version</button>
+                        <button onclick="deletePromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete Prompt Version</button>
+                        <button onclick="toggleDiff(this.closest('.task'), this)" class="btn btn-primary mt-3 ml-2" data-action="show">Show Diff</button>
+                    </div>
 
-                <!-- System Prompts UI -->
-                <div class="system-prompts mt-4">
-                    <h4 class="mb-4">System Prompts</h4>
-                    <!-- Sample System Prompt -->
-                    <div class="system-prompt version_1">
-                        <label>Version_1:</label>
-                        <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
+                    <!-- System Prompts UI -->
+                    <div class="system-prompts mt-4">
+                        <h4 class="mb-4">System Prompts</h4>
+                        <!-- Sample System Prompt -->
+                        <div class="system-prompt version_1">
+                            <label>Version_1:</label>
+                            <textarea name="prompt" class="form-control mb-3" placeholder="Prompt" rows="5"></textarea>
 
-                        <div class="comment-container">
-                            <label for="comment">Comment:</label>
-                            <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                            <div class="comment-container">
+                                <label for="comment">Comment:</label>
+                                <input type="text" name="comment" class="form-control" placeholder="Comment" />
+                            </div>
+
                         </div>
-
+                    </div>
+                    <div class="button-group">
+                        <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
+                        <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
                     </div>
                 </div>
-                <div class="button-group">
-                    <button onclick="addSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3">Add System Prompt</button>
-                    <button onclick="deleteSystemPromptVersion(this.closest('.task'))" class="btn btn-primary mt-3 ml-2">Delete System Prompt</button>
-                </div>
-            </div>
+            </div>    
         </div>
             `;
             //document.getElementById("tasks").innerHTML += taskTemplate;
@@ -373,7 +432,6 @@
                     console.error('Show Diff Button not found!');
                 }
             }
-
             
         }
 
@@ -568,6 +626,20 @@
             reader.readAsText(event.target.files[0]);
         }
 
+        // Function to expand or collapse all tasks
+        function toggleAllTasks(action) {
+            const toggleBtns = document.querySelectorAll('.toggle-task-btn');
+            toggleBtns.forEach((btn) => {
+                if (action === 'expand') {
+                    btn.click();
+                } else {
+                    const content = btn.parentElement.nextElementSibling;
+                    if (content.style.display === 'block') {
+                        btn.click();
+                    }
+                }
+            });
+        }
 
         function createComponents(data) {
             const tasksDiv = document.getElementById('tasks');
@@ -578,18 +650,53 @@
 
                 const taskDiv = document.createElement('div');
                 taskDiv.className = 'task card p-4 mb-4';
+                taskDiv.setAttribute('data-collapsed', 'false');
+
+                // Task Header
+                const taskHeader = document.createElement('div');
+                taskHeader.className = 'task-header'; // You can style this class if needed
+                taskDiv.appendChild(taskHeader); // Appending taskHeader to taskDiv
+
+                const toggleIcon = document.createElement('i');
+                toggleIcon.className = 'fas fa-chevron-down toggle-icon'; // Changed to chevron
+                toggleIcon.style.cursor = 'pointer';
+                toggleIcon.style.marginLeft = '10px';
+
+                toggleIcon.addEventListener('click', function () {
+                    
+                    // const children = taskDiv.getElementsByClassName('toggle-content');
+                    // const isCollapsed = Array.from(children).every(child => child.style.display === 'none');
+                    // Array.from(children).forEach(child => child.style.display = isCollapsed ? '' : 'none');
+                    // toggleIcon.className = isCollapsed ? 'fas fa-chevron-up toggle-icon' : 'fas fa-chevron-down toggle-icon'; // Toggle the icon
+                    toggleTask(toggleIcon);
+                });
+
+                
+
+                // Append the toggle icon after the input
+                taskDiv.appendChild(toggleIcon);
+
+                taskHeader.appendChild(toggleIcon); // Appending to taskHeader to keep it always visible
 
                 const taskNameInput = document.createElement('input');
+                taskNameInput.readOnly = false; // Initially set as editable.
                 taskNameInput.type = 'text';
-                taskNameInput.className = 'task-name form-control mb-4';
+                taskNameInput.className = 'task-name form-control mb-4 toggle-content'; // Assign unique class to toggle visibility
                 taskNameInput.value = taskName;
                 taskDiv.appendChild(taskNameInput);
-                
+                taskHeader.appendChild(taskNameInput); // Appending to taskHeader to keep it always visible
+
+                // Collapsible Content Div
+                const collapsibleContent = document.createElement('div');
+                collapsibleContent.className = 'collapsible-content'; // You can style this class if needed
+                taskDiv.appendChild(collapsibleContent); // Appending collapsibleContent to taskDiv
+
+
                 // Creating Prompts
                 if (taskData.prompts) {
 
                     const promptsDiv = document.createElement('div');
-                    promptsDiv.className = 'prompts';
+                    promptsDiv.className = 'prompts toggle-content';
 
                     const promptsHeader = document.createElement('h4');
                     promptsHeader.className = 'mb-4';
@@ -703,7 +810,7 @@
 
                     // Creating buttons for adding and deleting prompt versions
                     const buttonGroupDiv = document.createElement('div');
-                    buttonGroupDiv.className = 'button-group';
+                    buttonGroupDiv.className = 'button-group toggle-content';
 
                     // Add Prompt Version Button
                     const addPromptBtn = document.createElement('button');
@@ -738,6 +845,9 @@
 
                     // Appending button group to taskDiv
                     taskDiv.appendChild(buttonGroupDiv);
+
+                    collapsibleContent.appendChild(promptsDiv); // Appending to collapsibleContent
+                    collapsibleContent.appendChild(buttonGroupDiv); // Appending to collapsibleContent
                 }
 
                 
@@ -746,7 +856,7 @@
                     
 
                     const systemPromptsDiv = document.createElement('div');
-                    systemPromptsDiv.className = 'system-prompts mt-4';
+                    systemPromptsDiv.className = 'system-prompts mt-4 toggle-content';
                     
                     const systemPromptsHeader = document.createElement('h4');
                     systemPromptsHeader.className = 'mb-4';
@@ -801,8 +911,6 @@
                         // Append Comment Container to System Prompt Div
                         systemPromptDiv.appendChild(systemCommentContainer);
 
-
-
                         // Here add other elements and values as needed for system prompts.
                         
                         systemPromptsDiv.appendChild(systemPromptDiv);
@@ -814,7 +922,7 @@
 
                     // Creating buttons for adding and deleting system prompts
                     const systemButtonGroupDiv = document.createElement('div');
-                    systemButtonGroupDiv.className = 'button-group';
+                    systemButtonGroupDiv.className = 'button-group toggle-content';
 
                     // Add System Prompt Button
                     const addSystemPromptBtn = document.createElement('button');
@@ -836,13 +944,18 @@
 
                     // Appending button group to taskDiv
                     taskDiv.appendChild(systemButtonGroupDiv);
+                    collapsibleContent.appendChild(systemPromptsDiv); // Appending to collapsibleContent
+                    collapsibleContent.appendChild(systemButtonGroupDiv); // Appending to collapsibleContent
                 }
 
                 tasksDiv.appendChild(taskDiv);
+                //collapseTasksIfExist();
+                if(Object.keys(data).length > 0) {
+                    // Call toggleTask to collapse the task immediately after it is created
+                    toggleTask(toggleIcon);
+                }
             }
         }
-
-
 
     </script>
 </body>

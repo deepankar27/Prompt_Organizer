@@ -1,20 +1,34 @@
-Task_1:
+intent identification:
   prompts:
     Version_1:
       prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the entire passage. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1##"
-      temperature: ""
-      top_p: ""
-      max_tokens: ""
-      threshold: ""
+      temperature: ".15"
+      top_p: ".95"
+      max_tokens: "10"
+      threshold: ".65"
       status: "Best Prompt"
-      comment: ""
+      comment: "working on it"
     version_2:
-      prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the entire passage content. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1##"
+      prompt: "I am giving you a passage which is noisy and you have to find the most important intents which are having high discussion value, important and represent the passage content. All the intents must be in string format and relevancy score must be in integer format. Your response must contain outputs in dictionary format, following are some examples: [{intents: Intent Score},{}]. Do not add any explanations. Transcript: ##placeholder_1## Do not add anything on your own."
+      temperature: ".25"
+      top_p: ".9"
+      max_tokens: "10"
+      threshold: ".75"
+      status: "Evaluating"
+      comment: ""
+  system_prompts:
+    version_1:
+      prompt: "be helpful"
+      comment: ""
+Summary:
+  prompts:
+    version_1:
+      prompt: ""
       temperature: ""
       top_p: ""
       max_tokens: ""
       threshold: ""
-      status: "Evaluating"
+      status: ""
       comment: ""
   system_prompts:
     version_1:

@@ -101,3 +101,21 @@ label {
     background-color: #ffe6e6; /* light red */
     color: #800000; /* red */
 }
+
+.task-header {
+    display: flex;
+    align-items: center; /* to align items vertically at the center */
+  }
+  
+  .toggle-icon {
+    align-self: center; /* align self is used to align the individual flex item (icon) */
+    margin-right: 10px; /* margin between icon and the input */
+    cursor: pointer;
+    padding-bottom: 18px;
+  }
+  
+  .task-name { /* if the input has a class task-name */
+    align-self: center; /* align self is used to align the individual flex item (input) */
+  }
+  
+  
