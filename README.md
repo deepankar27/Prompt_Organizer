@@ -152,16 +152,16 @@ answer = response['choices'][0]['message']['content']
 print(answer)
 ```
 
-### This could be helpful 📘
-For now, I run this app from my project to avoid going back and forth with the YAML file. All my modifications stay at the project level. The idea is, in the near future, to make this integration seamless.
-
-### How to use it for LLM based application develoment:
+## 🌟 How to use it for LLM based application develoment 🌟:
 
 <p align="center">
   <img src="assets/Process_step.jpg" width="700" height="500" alt="Flow">
 </p>
 
 By adhering to the outlined steps, you can adopt a structured and systematic approach. Prompt Organizer empowers you to design, meticulously examine, and implement your prompts with assurance. This leads to the development of advanced and reliable AI applications.
+
+## This could be helpful 📘
+For now, I run this app from my project to avoid going back and forth with the YAML file. All my modifications stay at the project level. The idea is, in the near future, to make this integration seamless.
 
 ## Future ideas 💡
 1. Setup git integration.
@@ -171,7 +171,5 @@ By adhering to the outlined steps, you can adopt a structured and systematic app
 
 All with ease of use.
 
-## 🌟 Special Acknowledgments: Powered by ChatGPT 🌟
-
-In the creation of the **Prompt Organizer**, a revolutionary entity has played an instrumental role, serving as the backbone of the development process – **ChatGPT by OpenAI**. I haven't written a single line of code! I wanted to give a try how well it can help me in the development cycle, and here it is - the well-tested, user friendly
-:clap: :clap: **Prompt Organizer!** :clap: :clap:
+Happy Prompting,
+:clap: **Prompt Organizer** :clap:
