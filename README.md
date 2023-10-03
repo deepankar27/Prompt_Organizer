@@ -15,33 +15,33 @@ In the area of **Prompt Engineering**, managing multiple versions of prompts can
 An experimental open-source attempt to make life easy for prompt engineers & developers. The unorganized way of managing prompts makes work tough, so we bring a structured approach to help prompt engineers & developers track, share, and handle prompts easily with their team. The **Prompt Organizer**.
 
 ## Features of the Prompt Organizer.
-1. Task-Based Organization:
+1. **Task-Based Organization**:
 Users can organize prompts under different tasks (Summarization, Topic Discovery, Intent identification etc), allowing for a clear and categorized view of each prompt.
 
-2. Prompt Versions Management:
+2. **Prompt Versions Management**:
 Within each task, users can create and manage multiple versions of prompts, each with its unique set of parameters.
 
-3. Difference Visualization:
+3. **Difference Visualization**:
 Users can leverage the integrated 'Show Diff' feature to effortlessly visualize and compare differences, additions, or deletions between various prompt versions, highlighted for easy spotting.
 
-4. Prompt Parameters Configuration:
+4. **Prompt Parameters Configuration**:
 Users can easily configure various parameters like temperature, top_p, max tokens, and threshold for each version of the prompt.
 
-5. Status Tracking:
+5. **Status Tracking**:
 The app allows users to set and track the status of each prompt, aiding in prompt evaluation and optimization.
 
-6. Commenting Feature:
+6. **Commenting Feature**:
 Each prompt version has an associated comment box, allowing users to annotate important notes or information related to the prompt.
 
-7. System Prompt Management:
+7. **System Prompt Management**:
 Alongside user prompts, the app also enables the management of system prompts, each with its commenting feature.
 
-8. Save and Download:
+8. **Save and Download**:
 Users can save their progress and download the organized prompts in YAML format, facilitating easy sharing and storage.
 
-9. YAML Integration for Developer Pipelines: This application seamlessly facilitates developers by allowing the direct incorporation of YAML files into their development pipelines, making the development process more intuitive and less error-prone.
+9. **YAML Integration for Developer Pipelines**: This application seamlessly facilitates developers by allowing the direct incorporation of YAML files into their development pipelines, making the development process more intuitive and less error-prone.
 
-10. Single user app: This application is currently designed for individual use, with plans for future upgrades to support multiple users.
+10. **Single user app**: This application is currently designed for individual use, with plans for future upgrades to support multiple users.
 
 <p align="center">
   <img src="assets/capture_1.jpeg" width="500" height="500" alt="Prompt Organizer">
