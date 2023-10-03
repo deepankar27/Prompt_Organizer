@@ -63,10 +63,22 @@ def get_parameters(task, version):
 
     yaml_content = read_template()
     version = "version"+"_"+str(version)
-    temp = yaml_content[task]['prompts'][version]['temperature']
-    top_p = yaml_content[task]['prompts'][version]['top_p']
-    max_tokens = yaml_content[task]['prompts'][version]['max_tokens']
-    threshold = yaml_content[task]['prompts'][version]['threshold']
+
+    if yaml_content[task]['prompts'][version]['temperature'] != '':
+        temp = float(yaml_content[task]['prompts'][version]['temperature'])
+    else: temp = 0.0
+
+    if yaml_content[task]['prompts'][version]['top_p'] != '':
+        top_p = float(yaml_content[task]['prompts'][version]['top_p'])
+    else: top_p = 0.0
+    
+    if yaml_content[task]['prompts'][version]['max_tokens'] != '':
+        max_tokens = int(yaml_content[task]['prompts'][version]['max_tokens'])
+    else: max_tokens = 0
+
+    if yaml_content[task]['prompts'][version]['threshold'] != '':
+        threshold = float(yaml_content[task]['prompts'][version]['threshold'])
+    else: threshold = 0.0
 
     return {"temperature":temp, "top_p":top_p, "max_tokens":max_tokens, "threshold":threshold}
 
