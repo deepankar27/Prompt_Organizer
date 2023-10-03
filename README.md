@@ -5,7 +5,7 @@
 </p>
 
 [![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@deep-ch/dimension-reduction-by-whitening-bert-roberta-5e103093f782)
-[![Python] (https://img.shields.io/badge/python-3.8-blue.svg)]
+[![Python](https://img.shields.io/badge/python-3.8-blue.svg)]
 
 ## Track, share, code and integrate prompts with ease.
 
