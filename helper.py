@@ -34,7 +34,7 @@ def get_prompt(task, version):
     '''
     yaml_content = read_template()
     version = "version"+"_"+str(version)
-    return yaml_content[task]['prompts']['version_1']["prompt"]
+    return yaml_content[task]['prompts'][version]["prompt"]
 
 
 def get_sysprompt(task, version):
@@ -49,7 +49,7 @@ def get_sysprompt(task, version):
     '''
     yaml_content = read_template()
     version = "version"+"_"+str(version)
-    return yaml_content[task]['system_prompts']['version_1']["prompt"]
+    return yaml_content[task]['system_prompts'][version]["prompt"]
 
 def get_parameters(task, version):
     '''
