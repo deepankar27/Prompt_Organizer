@@ -4,7 +4,7 @@
   <img src="assets/organize_llama.jpg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
-## Manage and Share Prompts with Ease.
+## Track, share, code and integrate prompts with ease.
 
 In the area of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
 
