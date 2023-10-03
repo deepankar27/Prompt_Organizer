@@ -4,6 +4,9 @@
   <img src="assets/organize_llama.jpg" width="500" height="500" alt="Prompt Organizer">
 </p>
 
+![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white) (https://medium.com/@deep-ch/dimension-reduction-by-whitening-bert-roberta-5e103093f782)
+![Python] https://img.shields.io/badge/python-3.8-blue.svg
+
 ## Track, share, code and integrate prompts with ease.
 
 In the area of **Prompt Engineering**, managing multiple versions of prompts can become overwhelming. Individuals and teams often face challenges in tracking and organizing different types of prompts, leading to the possibility of missing out on some of the best ones.
