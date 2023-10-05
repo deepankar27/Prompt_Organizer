@@ -140,5 +140,93 @@ label {
     transform: rotate(180deg);
 }
 
-  
-  
+.prompts {
+    position: relative; /* Add this */
+}
+
+.add-prompt-icon {
+    font-size: 24px;
+    color: #007BFF;
+    cursor: pointer;
+    position: absolute; /* Change this */
+    top: 5px; /* Add this */
+    right: 5px; /* Add this */
+    transition: 0.3s;
+}
+
+.add-prompt-icon:hover {
+    transform: scale(1.1);
+}
+
+.fab-container {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 9999; /* To make sure it's on top of other elements */
+}
+
+.fab {
+    border-radius: 50%;
+    font-size: 24px;
+    width: 60px; /* Fixed width to ensure a round shape */
+    height: 60px; /* Fixed height to ensure a round shape */
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    transition: all 0.3s ease;
+    padding:40;
+    margin: 0;
+}
+
+.fab.btn {
+    display: inline-flex; /* This will apply flex while keeping the inline nature of the button */
+    align-items: center;
+    justify-content: center;
+}
+
+.fab.btn i {
+    margin: 0;
+    padding: 0;
+}
+
+
+@media (max-width: 768px) {
+    /* Adjustments for smaller screens */
+    .fab {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+}
+
+.fab-primary {
+    background-color: #007bff;
+}
+
+.fab-primary:hover {
+    background-color: #0056b3;
+}
+
+.fab-success {
+    background-color: #28a745;
+}
+
+.fab-success:hover {
+    background-color: #207435;
+}
+
+.fab-danger {
+    background-color: #dc3545;
+}
+
+.fab-danger:hover {
+    background-color: #b92d3b;
+}
+
+.fab-secondary {
+    background-color: #6c757d;
+}
+
+.fab-secondary:hover {
+    background-color: #545b62;
+}
